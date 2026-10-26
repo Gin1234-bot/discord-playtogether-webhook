@@ -129,19 +129,34 @@ def send_discord(content, embeds):
 
 def create_code_embed(code_info, now):
     code = code_info["code"]
-    reward = code_info["reward"]
-    status = code_info["status"]
+    raw_reward = code_info.get("reward", "").strip()
+    raw_status = code_info.get("status", "").strip()
+    
+    # Chuẩn hóa phần thưởng chi tiết
+    if not raw_reward or raw_reward.lower() in ("quà miễn phí", "quà ngẫu nhiên", "quà"):
+        reward_display = "Kim cương, Tiền sao, Trang bị hoặc Hộp quà bí mật *(Mở hộp thư in-game để nhận)*"
+    else:
+        reward_display = f"**{raw_reward}** *(Gửi vào Hộp thư in-game)*"
+        
+    # Chuẩn hóa thời hạn sử dụng
+    date_match = re.search(r'\d{1,2}[/-]\d{1,2}([/-]\d{2,4})?', raw_status)
+    if date_match:
+        expire_display = f"Hết hạn vào ngày **{date_match.group(0)}**"
+    elif "hết hạn" in raw_status.lower():
+        expire_display = f"Theo thông báo sự kiện: **{raw_status}**"
+    else:
+        expire_display = "Thường kéo dài từ **24h – 48h** hoặc **giới hạn số lượt nhập** ➔ *Nhập ngay kẻo hết lượt!*"
     
     embed = {
         "title": f"🎮 MÃ QUÀ TẶNG: {code}",
         "description": (
-            f"🔑 **MÃ CODE:** `{code}` *(Chạm vào mã để sao chép)*\n\n"
-            f"🎁 **Phần thưởng:** {reward}\n"
-            f"⏳ **Tình trạng:** {status}\n\n"
+            f"🔑 **MÃ CODE:** `{code}` *(Chạm hoặc click vào mã để sao chép)*\n\n"
+            f"🎁 **Phần thưởng:** {reward_display}\n"
+            f"⏳ **Hạn sử dụng:** {expire_display}\n\n"
             "──────────────────────────────────────\n"
-            "📱 **HƯỚNG DẪN NHẬP CODE:**\n"
+            "📱 **HƯỚNG DẪN ĐỔI QUÀ:**\n"
             "• **Android:** Mở Game ➔ Điện thoại ➔ Cài đặt ➔ Nhập Coupon.\n"
-            "• **iOS & Máy tính:** Đổi trực tiếp qua website chính thức bên dưới."
+            "• **iOS (iPhone/iPad) & PC:** Nhập trực tiếp qua liên kết web bên dưới."
         ),
         "color": 0xF1C40F, # Vàng hoàng kim Play Together
         "fields": [
