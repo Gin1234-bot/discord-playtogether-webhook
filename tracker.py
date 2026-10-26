@@ -234,7 +234,7 @@ def main(mode="check"):
             seen.add(c["code"])
         save_seen(seen)
     else:
-        print("[*] Không có mã code mới nào. Toàn bộ 36 mã đều đã được lưu vết. Giữ im lặng.")
+        print(f"[*] Không có mã code mới nào. Toàn bộ {len(seen)} mã đều đã được lưu vết. Giữ im lặng.")
 
 if __name__ == "__main__":
     run_mode = sys.argv[1] if len(sys.argv) > 1 else "check"
