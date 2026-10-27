@@ -223,7 +223,7 @@ def main(mode="check"):
         
         content = (
             "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"@everyone 🎁 **PHÁT HIỆN {len(new_codes)} MÃ GIFTCODE PLAY TOGETHER MỚI!**\n"
+            f"🎁 **PHÁT HIỆN {len(new_codes)} MÃ GIFTCODE PLAY TOGETHER MỚI!**\n"
             f"⏰ *Cập nhật lúc: {time_str} ({thu}, {date_str})* • <t:{ts}:R>\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         )
